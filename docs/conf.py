@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# subd documentation build configuration file, created by
+# desub documentation build configuration file, created by
 # sphinx-quickstart on Sat Aug 11 18:39:45 2012.
 #
 # This file is execfile()d with the current directory set to its containing dir.
@@ -40,7 +40,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'subd'
+project = u'desub'
 copyright = u'2012, Kumar McMillan and contributors'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -164,7 +164,7 @@ html_static_path = ['_static']
 #html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'subddoc'
+htmlhelp_basename = 'desubdoc'
 
 
 # -- Options for LaTeX output --------------------------------------------------
@@ -183,7 +183,7 @@ latex_elements = {
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'subd.tex', u'subd Documentation',
+  ('index', 'desub.tex', u'desub Documentation',
    u'Kumar McMillan and contributors', 'manual'),
 ]
 
@@ -213,7 +213,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'subd', u'subd Documentation',
+    ('index', 'desub', u'desub Documentation',
      [u'Kumar McMillan and contributors'], 1)
 ]
 
@@ -227,8 +227,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  ('index', 'subd', u'subd Documentation',
-   u'Kumar McMillan and contributors', 'subd', 'One line description of project.',
+  ('index', 'desub', u'desub Documentation',
+   u'Kumar McMillan and contributors', 'desub', 'One line description of project.',
    'Miscellaneous'),
 ]
 

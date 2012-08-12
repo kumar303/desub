@@ -18,12 +18,12 @@ def join(cmd_args, **kw):
     """
     Join a subprocess or start one if it's not running.
 
-    The return value is a :class:`subd.Subd` object.
+    The return value is a :class:`desub.Subd` object.
 
     Example::
 
-        >>> import subd
-        >>> proc = subd.join(['python', 'tests/cmd/loop.py'])
+        >>> import desub
+        >>> proc = desub.join(['python', 'tests/cmd/loop.py'])
         >>> proc.pid
         1987
         >>> proc.stdout.read()
@@ -56,7 +56,7 @@ class Subd:
     **root**
         The root directory to store subprocess artifacts like a PID file
         and stdout/stderr logs.
-        By default this is ``~/.subd``.
+        By default this is ``~/.desub``.
 
     Members
     """
@@ -67,7 +67,7 @@ class Subd:
         self.kw = kw
         root = kw.pop('root', None)
         if not root:
-            root = os.path.join(os.path.expanduser('~'), '.subd')
+            root = os.path.join(os.path.expanduser('~'), '.desub')
         self.root = os.path.join(root, self.name)
         if not os.path.exists(self.root):
             os.makedirs(self.root)

@@ -8,7 +8,7 @@ import unittest
 from nose.tools import eq_, raises
 import psutil
 
-import subd
+import desub
 
 
 class Test(unittest.TestCase):
@@ -22,8 +22,8 @@ class Test(unittest.TestCase):
         shutil.rmtree(self.tmp)
 
     def join(self):
-        return subd.join([sys.executable,
-                          self.cmd('loop.py')], root=self.tmp)
+        return desub.join([sys.executable,
+                           self.cmd('loop.py')], root=self.tmp)
 
     def cmd(self, name):
         return os.path.join(os.path.dirname(__file__), 'cmd', name)
@@ -52,7 +52,7 @@ class Test(unittest.TestCase):
         eq_(self.proc.pid, proc2.pid)
 
     def test_default_root(self):
-        pr = subd.join([sys.executable, self.cmd('loop.py')])
+        pr = desub.join([sys.executable, self.cmd('loop.py')])
         self.addCleanup(lambda: shutil.rmtree(pr.root))
         assert pr.pid != self.proc.pid, (
                             'new root should make separate procs')

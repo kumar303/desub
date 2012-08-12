@@ -1,11 +1,11 @@
 ====
-subd
+desub
 ====
 
 .. highlight:: python
 
 
-subd is a Python module to work with a detached `subprocess`_.
+desub is a Python module to work with a detached `subprocess`_.
 
 This is useful for making a web interface (or whatever) to monitor a
 process running in the background. You can start a
@@ -22,7 +22,7 @@ Installation
 
  ::
 
-    pip install subd
+    pip install desub
 
 This pulls in `psutil`_ as a requirement.
 
@@ -31,9 +31,9 @@ This pulls in `psutil`_ as a requirement.
 API
 ===
 
-.. autofunction:: subd.join
+.. autofunction:: desub.join
 
-.. autoclass:: subd.Subd
+.. autoclass:: desub.Subd
     :members: pid, stdout, stderr, stop, is_running
 
 Developers
@@ -54,7 +54,7 @@ To the build the docs run::
 
 The issue tracker can be found on github.
 
-.. _`source from git`: https://github.com/kumar303/subd
+.. _`source from git`: https://github.com/kumar303/desub
 .. _tox: http://tox.testrun.org/latest/
 
 
