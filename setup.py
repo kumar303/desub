@@ -8,7 +8,7 @@ def path(name):
 
 
 setup(name='desub',
-      version='1.0',
+      version='1.0.1',
       description='Work with a detached subprocess.',
       long_description=path('README.rst').read(),
       author='Kumar McMillan',
