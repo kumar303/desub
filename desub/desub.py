@@ -18,7 +18,7 @@ def join(cmd_args, **kw):
     """
     Join a subprocess or start one if it's not running.
 
-    The return value is a :class:`desub.Subd` object.
+    The return value is a :class:`desub.Desub` object.
 
     Example::
 
@@ -34,10 +34,10 @@ def join(cmd_args, **kw):
         >>> proc.is_running()
         False
     """
-    return Subd(cmd_args, **kw)
+    return Desub(cmd_args, **kw)
 
 
-class Subd:
+class Desub:
     """
     A joined subprocess.
 
