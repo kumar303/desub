@@ -46,6 +46,12 @@ you have the tox_ tool. To run the test suite, cd into the root and type::
     tox
 
 This will run all tests in a virtualenv using the supported versions of Python.
+
+To the build the docs run::
+
+    pip install -r docs/requirements.txt
+    make -C docs html
+
 The issue tracker can be found on github.
 
 .. _`source from git`: https://github.com/kumar303/subd
