@@ -1,0 +1,8 @@
+*.py[co]
+*.sw[po]
+.DS_Store
+.tox
+*~
+*.mo
+*.db
+dist
