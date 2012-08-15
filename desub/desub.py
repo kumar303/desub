@@ -67,7 +67,7 @@ def join(cmd_args, **kw):
         False
 
     When you read the output of a stopped command,
-    that's output from the subsequent run.
+    that's the output from a subsequent run.
 
         >>> proc.stdout.read()
         'stdout'
@@ -78,12 +78,12 @@ def join(cmd_args, **kw):
 
 class Desub:
     """
-    A joined subprocess.
+    A detached subprocess.
 
     This object represents a command with **cmd_args** that may or may
-    not be running yet. If it's not running, the command will be started
-    otherwise you will join the command. Two processes can be running
-    at the same time but only if their args are different.
+    not be running yet. Two processes can be running
+    at the same time but only if their args are different or if their
+    **roots** are different.
 
     The interface is similar to
     `subprocess.Popen <http://docs.python.org/library/subprocess.html#popen-constructor>`_
