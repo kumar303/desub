@@ -12,6 +12,12 @@ process running in the background. You can start a
 process from a web request and serve subsequent requests
 to report status on and show output for the process you started earlier.
 
+Think of it as a way to monitor a long running command without
+having to manage PIDs yourself. You can either start or join a
+command (same executable, same args). Desub is not designed for running
+multiple instances of the same command. You can just use a regular
+subprocess for that.
+
 .. contents::
     :local:
 
