@@ -40,7 +40,7 @@ API
 .. autofunction:: desub.join
 
 .. autoclass:: desub.Desub
-    :members: pid, stdout, stderr, stop, is_running
+    :members: pid, stdout, stderr, start, stop, is_running
 
 Developers
 ==========
