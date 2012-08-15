@@ -20,19 +20,58 @@ def join(cmd_args, **kw):
 
     The return value is a :class:`desub.Desub` object.
 
-    Example::
+    Start by joining a command that may or may not
+    already be running.
+
+    .. doctest::
+        :hide:
 
         >>> import desub
+
+    .. doctest::
+
         >>> proc = desub.join(['python', 'tests/cmd/loop.py'])
-        >>> proc.pid
-        1987
+
+    There will only ever be one instance of that command
+    running unless you specify a custom *root*.
+    Check to see if the command is running:
+
+        >>> proc.is_running()
+        False
+
+    OK. It's not running, so start it up:
+
+        >>> proc.start()
+        >>> proc.is_running()
+        True
+        >>> type(proc.pid)
+        <type 'int'>
+
+    .. doctest::
+        :hide:
+
+        >>> import time
+        >>> time.sleep(1)
+
+    Fetch the output:
+
         >>> proc.stdout.read()
         'stdout'
         >>> proc.stderr.read()
         'stderr'
+
+    Stop the command, if you want to:
+
         >>> proc.stop()
         >>> proc.is_running()
         False
+
+    When you read the output of a stopped command,
+    that's output from the subsequent run.
+
+        >>> proc.stdout.read()
+        'stdout'
+
     """
     return Desub(cmd_args, **kw)
 
@@ -75,8 +114,6 @@ class Desub:
         self.data['cmd_args'] = cmd_args
         self.data['keyword_args'] = repr(kw)
         self.save_data()
-        if not self.is_running():
-            self.start()
 
     def is_running(self):
         """True if the subprocess is running."""
@@ -129,7 +166,6 @@ class Desub:
         if pp:
             try:
                 kill_process_nicely(pp)
-                shutil.rmtree(self.root)
             except psutil.NoSuchProcess:
                 pass
 

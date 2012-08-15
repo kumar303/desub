@@ -29,30 +29,43 @@ class Test(unittest.TestCase):
         return os.path.join(os.path.dirname(__file__), 'cmd', name)
 
     def test_start(self):
+        self.proc.start()
         pp = psutil.Process(self.proc.pid)
         eq_(pp.status, 'running')
+        self.proc.stop()
+        self.assertRaises(psutil.NoSuchProcess, lambda: pp.status)
 
     @raises(psutil.NoSuchProcess)
     def test_stop(self):
+        self.proc.start()
         pid = self.proc.pid
         self.proc.stop()
         psutil.Process(pid)
 
-    def test_stop_clears_root(self):
+    def test_stop_preserves_root(self):
+        self.proc.start()
+        assert os.path.exists(self.proc.root)
         self.proc.stop()
-        assert not os.path.exists(self.proc.root)
+        assert os.path.exists(self.proc.root)
 
     def test_output(self):
+        self.proc.start()
         time.sleep(1)
         eq_(self.proc.stdout.read(), 'stdout')
         eq_(self.proc.stderr.read(), 'stderr')
 
     def test_join(self):
+        self.proc.start()
         proc2 = self.join()
+        proc2.start()
         eq_(self.proc.pid, proc2.pid)
 
     def test_default_root(self):
-        pr = desub.join([sys.executable, self.cmd('loop.py')])
-        self.addCleanup(lambda: shutil.rmtree(pr.root))
-        assert pr.pid != self.proc.pid, (
+        self.proc.start()
+        tmp = tempfile.mkdtemp()
+        pr = desub.join([sys.executable, self.cmd('loop.py')], root=tmp)
+        try:
+            assert pr.pid != self.proc.pid, (
                             'new root should make separate procs')
+        finally:
+            shutil.rmtree(pr.root)

@@ -6,3 +6,4 @@
 *.mo
 *.db
 dist
+docs/_build

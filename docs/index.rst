@@ -1,6 +1,6 @@
-====
+=====
 desub
-====
+=====
 
 .. highlight:: python
 
@@ -33,7 +33,7 @@ API
 
 .. autofunction:: desub.join
 
-.. autoclass:: desub.Subd
+.. autoclass:: desub.Desub
     :members: pid, stdout, stderr, stop, is_running
 
 Developers
