@@ -164,12 +164,19 @@ class Desub:
         with open(self.path('cmd.pid'), 'w') as f:
             f.write(str(pr.pid))
 
-    def stop(self):
-        """Stop the subprocess."""
+    def stop(self, timeout=15):
+        """Stop the subprocess.
+
+        Keyword Arguments
+
+        **timeout**
+          Time in seconds to wait for a process and its
+          children to exit.
+        """
         pp = self.pid
         if pp:
             try:
-                kill_process_nicely(pp)
+                kill_process_nicely(pp, timeout=timeout)
             except psutil.NoSuchProcess:
                 pass
 
@@ -194,9 +201,9 @@ class Desub:
             json.dump(self.data, f)
 
 
-def kill_process_nicely(pid):
+def kill_process_nicely(pid, timeout=15):
     p = psutil.Process(pid)
     for child in p.get_children():
         kill_process_nicely(child.pid)
     p.send_signal(signal.SIGINT)
-    p.wait(timeout=10)
+    p.wait(timeout=timeout)
