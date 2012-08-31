@@ -120,8 +120,12 @@ class Desub:
         pp = self.pid
         if pp:
             try:
-                psutil.Process(pp)
-                return True
+                proc = psutil.Process(pp)
+                if str(proc.status) == 'running':
+                    return True
+                else:  # zombie script!
+                    self.stop()
+                    return False
             except psutil.NoSuchProcess:
                 pass
         return False
