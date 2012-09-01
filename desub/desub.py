@@ -5,7 +5,6 @@ import hashlib
 import json
 import os
 import re
-import shutil
 import signal
 import subprocess
 
@@ -116,16 +115,35 @@ class Desub:
         self.save_data()
 
     def is_running(self):
-        """True if the subprocess is running."""
+        """
+        True if the subprocess is running.
+
+        If it's a zombie then we call
+        :func:`desub.Desub.stop` to kill it with fire and return False.
+        """
         pp = self.pid
         if pp:
             try:
                 proc = psutil.Process(pp)
-                if str(proc.status) == 'running':
-                    return True
-                else:  # zombie script!
+
+                # Possible status:
+                # "STATUS_RUNNING", "STATUS_IDLE",
+                # "STATUS_SLEEPING", "STATUS_DISK_SLEEP",
+                # "STATUS_STOPPED", "STATUS_TRACING_STOP",
+                # "STATUS_ZOMBIE", "STATUS_DEAD",
+                # "STATUS_WAKING", "STATUS_LOCKED",
+
+                if proc.status in (psutil.STATUS_STOPPED,
+                                   psutil.STATUS_DEAD,
+                                   psutil.STATUS_ZOMBIE):
+                    # The PID is still in the process table so call stop to
+                    # remove the PID.
                     self.stop()
                     return False
+                else:
+                    # OK, it's running.
+                    return True
+
             except psutil.NoSuchProcess:
                 pass
         return False

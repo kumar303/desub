@@ -11,25 +11,37 @@ import psutil
 import desub
 
 
-class Test(unittest.TestCase):
+class Base(unittest.TestCase):
 
     def setUp(self):
         self.tmp = tempfile.mkdtemp()
-        self.proc = self.join()
+        self.proc = None
 
     def tearDown(self):
-        self.proc.stop()
+        if self.proc and self.proc.is_running():
+            try:
+                self.proc.stop(timeout=2)
+            except psutil.TimeoutExpired:
+                print ' ** could not stop pid %s' % self.proc.pid
         shutil.rmtree(self.tmp)
-
-    def join(self):
-        return desub.join([sys.executable,
-                           self.cmd('loop.py')], root=self.tmp)
 
     def cmd(self, name):
         return os.path.join(os.path.dirname(__file__), 'cmd', name)
 
+    def join(self, cmd='loop.py'):
+        return desub.join([sys.executable,
+                           self.cmd(cmd)], root=self.tmp)
+
+
+class TestLongRunningCmd(Base):
+
+    def setUp(self):
+        super(TestLongRunningCmd, self).setUp()
+        self.proc = self.join()
+
     def test_start(self):
         self.proc.start()
+        eq_(self.proc.is_running(), True)
         pp = psutil.Process(self.proc.pid)
         eq_(pp.status, 'running')
         self.proc.stop()
@@ -41,6 +53,7 @@ class Test(unittest.TestCase):
         pid = self.proc.pid
         self.proc.stop()
         psutil.Process(pid)
+        eq_(self.proc.is_running(), False)
 
     def test_stop_preserves_root(self):
         self.proc.start()
